@@ -71,12 +71,10 @@ async function validateAPIKey() {
 }
 
 export async function activate(context: vscode.ExtensionContext) {
-	console.log(vscode.workspace.getConfiguration('scribeai').get('ApiKey'));
 	// Workspace settings override User settings when getting the setting.
 	if (vscode.workspace.getConfiguration('scribeai').get('ApiKey') === "" 
 		|| !(await validateAPIKey())) {
 		const apiKey = await showInputBox();
-		console.log(vscode.workspace.getConfiguration('scribeai').get('ApiKey'));
 	}
 	if (openai === undefined) {
 		openai = new OpenAIApi(new Configuration({
@@ -288,8 +286,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		const code = getCommentThreadCode(reply.thread);
 		const thread = reply.thread;
 		const prompt = generatePromptV1(question, thread);
-
-		const humanComment = new NoteComment(question, vscode.CommentMode.Preview, { name: 'VS Code' }, thread, thread.comments.length ? 'canDelete' : undefined);
+		const humanComment = new NoteComment(question, vscode.CommentMode.Preview, { name: 'VS Code', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/user-male-circle.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
 		thread.comments = [...thread.comments, humanComment];
 		
 		// If openai is not initialized initialize it with existing API Key 
@@ -297,7 +294,6 @@ export async function activate(context: vscode.ExtensionContext) {
 		if (openai === undefined) {
 			if (vscode.workspace.getConfiguration('scribeai').get('ApiKey') === '') {
 				const apiKey = await showInputBox();
-				console.log(vscode.workspace.getConfiguration('scribeai').get('ApiKey'));
 			}
 		
 			openai = new OpenAIApi(new Configuration({
@@ -316,9 +312,9 @@ export async function activate(context: vscode.ExtensionContext) {
 			presence_penalty: 0.0,
 			stop: ["Human:"],  // V1: "Human:"
 		});
-		
+
 		const responseText = response.data.choices[0].text ? response.data.choices[0].text : 'An error occured. Please try again...';
-		const AIComment = new NoteComment(responseText.trim(), vscode.CommentMode.Preview, { name: 'Scribe AI' }, thread, thread.comments.length ? 'canDelete' : undefined);
+		const AIComment = new NoteComment(responseText.trim(), vscode.CommentMode.Preview, { name: 'Scribe AI', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/chatbot.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
 		thread.comments = [...thread.comments, AIComment];
 	}
 
@@ -340,7 +336,6 @@ export async function activate(context: vscode.ExtensionContext) {
 		if (openai === undefined) {
 			if (vscode.workspace.getConfiguration('scribeai').get('ApiKey') === '') {
 				const apiKey = await showInputBox();
-				console.log(vscode.workspace.getConfiguration('scribeai').get('ApiKey'));
 			}
 		
 			openai = new OpenAIApi(new Configuration({
@@ -375,7 +370,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	 */
 	function replyNote(reply: vscode.CommentReply) {
 		const thread = reply.thread;
-		const newComment = new NoteComment(reply.text, vscode.CommentMode.Preview, { name: 'VS Code' }, thread, thread.comments.length ? 'canDelete' : undefined);
+		const newComment = new NoteComment(reply.text, vscode.CommentMode.Preview, { name: 'VS Code', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/user-male-circle.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
 		newComment.label = 'NOTE';
 		thread.comments = [...thread.comments, newComment];
 	}
