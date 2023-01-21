@@ -1,0 +1,216 @@
+{
+	"name": "scribeai",
+	"displayName": "ScribeAI",
+	"description": "ChatGPT extension for VSCode",
+	"version": "0.0.1",
+	"publisher": "Andrew Zhang",
+	"private": true,
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ajikan/ScribeAI"
+	},
+	"engines": {
+		"vscode": "^1.65.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "mywiki.createNote",
+				"title": "Create Note",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mywiki.replyNote",
+				"title": "Create Note",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mywiki.askAI",
+				"title": "Ask AI",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mywiki.aiEdit",
+				"title": "AI Edit",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mywiki.genDocString",
+				"title": "Generate Docstring",
+				"enablement": "true"
+			},
+			{
+				"command": "mywiki.editNote",
+				"title": "Edit",
+				"icon": {
+					"dark": "resources/edit_inverse.svg",
+					"light": "resources/edit.svg"
+				}
+			},
+			{
+				"command": "mywiki.deleteNote",
+				"title": "Delete",
+				"icon": {
+					"dark": "resources/close_inverse.svg",
+					"light": "resources/close.svg"
+				}
+			},
+			{
+				"command": "mywiki.deleteNoteComment",
+				"title": "Delete",
+				"icon": {
+					"dark": "resources/close_inverse.svg",
+					"light": "resources/close.svg"
+				}
+			},
+			{
+				"command": "mywiki.saveNote",
+				"title": "Save"
+			},
+			{
+				"command": "mywiki.cancelsaveNote",
+				"title": "Cancel"
+			},
+			{
+				"command": "mywiki.dispose",
+				"title": "Remove All Notes"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "mywiki.createNote",
+					"when": "false"
+				},
+				{
+					"command": "mywiki.replyNote",
+					"when": "false"
+				},
+				{
+					"command": "mywiki.askAI",
+					"when": "false"
+				},
+				{
+					"command": "mywiki.aiEdit",
+					"when": "false"
+				},
+				{
+					"command": "mywiki.genDocString",
+					"when": "false"
+				},
+				{
+					"command": "mywiki.deleteNote",
+					"when": "false"
+				},
+				{
+					"command": "mywiki.deleteNoteComment",
+					"when": "false"
+				}
+			],
+			"comments/commentThread/title": [
+				{
+					"command": "mywiki.deleteNote",
+					"group": "navigation",
+					"when": "commentController == comment-scribeai && !commentThreadIsEmpty"
+				}
+			],
+			"comments/commentThread/context": [
+				{
+					"command": "mywiki.createNote",
+					"group": "inline@5",
+					"when": "commentController == comment-scribeai && commentThreadIsEmpty"
+				},
+				{
+					"command": "mywiki.replyNote",
+					"group": "inline@4",
+					"when": "commentController == comment-scribeai && !commentThreadIsEmpty"
+				},
+				{
+					"command": "mywiki.askAI",
+					"group": "inline@1",
+					"when": "commentController == comment-scribeai"
+				},
+				{
+					"command": "mywiki.aiEdit",
+					"group": "inline@2",
+					"when": "commentController == comment-scribeai"
+				},
+				{
+					"command": "mywiki.genDocString",
+					"group": "inline@3",
+					"when": "commentController == comment-scribeai"
+				}
+			],
+			"comments/comment/title": [
+				{
+					"command": "mywiki.editNote",
+					"group": "group@1",
+					"when": "commentController == comment-scribeai"
+				},
+				{
+					"command": "mywiki.deleteNoteComment",
+					"group": "group@2",
+					"when": "commentController == comment-scribeai && comment == canDelete"
+				}
+			],
+			"comments/comment/context": [
+				{
+					"command": "mywiki.cancelsaveNote",
+					"group": "inline@1",
+					"when": "commentController == comment-scribeai"
+				},
+				{
+					"command": "mywiki.saveNote",
+					"group": "inline@2",
+					"when": "commentController == comment-scribeai"
+				}
+			]
+		},
+		"configuration": {
+			"title": "ScribeAI",
+			"properties": {
+				"scribeai.ApiKey": {
+					"type": "string",
+          			"default": "",
+					"scope": "application",
+          			"markdownDescription": "Your personal OpenAI API key. If you don't have one, generate a new one [here](https://beta.openai.com/account/api-keys).\n\nDon't forget to [restart your extension](command:workbench.action.reloadWindow) once you finished configuring so that your extension gets loaded with the new configurations."
+				},
+				"scribeai.models": {
+					"type": "string",
+    				"default": "code-davinci-002",
+    				"enum": ["code-davinci-002", "text-davinci-003"],
+					"enumDescriptions": [
+					"The Codex models are descendants of GPT-3 models that can understand and generate code.",
+					"GPT-3 models can understand and generate natural language."
+					],
+					"markdownDescription": "Choose the OpenAI model you want to use for generating your AI responses.\n\nYou can find more details about each model and their pricing [here](https://beta.openai.com/docs/models)."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"lint": "eslint \"src/**/*.ts\""
+	},
+	"devDependencies": {
+		"@types/node": "^16.11.7",
+		"@types/vscode": "~1.65.0",
+		"@typescript-eslint/eslint-plugin": "^5.42.0",
+		"@typescript-eslint/parser": "^5.42.0",
+		"eslint": "^8.26.0",
+		"typescript": "^4.8.4"
+	},
+	"dependencies": {
+		"openai": "^3.1.0"
+	}
+}
