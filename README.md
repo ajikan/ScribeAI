@@ -9,7 +9,7 @@
   ·
   <a href="https://github.com/ajikan/ScribeAI#-getting-started">Getting Started</a>
   ·
-  <a href="https://github.com/ajikan/ScribeAI#-support-and-gratitude">Support and Gratitude</a>
+  <a href="https://github.com/ajikan/ScribeAI#%EF%B8%8F-support-and-gratitude">Support and Gratitude</a>
 </h4>
 <p align="center">
 Scribe AI is a ChatGPT extension for VS Code. Now you can have ChatGPT right in VS Code! Use it as your AI programming assistant which you can talk with to understand complex code, modify and improve your code, or generate comments for your code. The possibilities are endless. To start, highlight a piece of code and click on the chat icon on the left to start talking with Scribe AI just like in ChatGPT! All your conversations are saved in your workspace so you can look back on them as notes.
