@@ -1,5 +1,5 @@
 <div align="center" id="madewithlua">
-    <img src="./resources/icons8-chatbot-94.png" width="94", height="94">
+    <img src="./resources/icons8-chatbot-94.png">
 </div>
 
 <h1 align="center">Scribe AI</h1>
@@ -104,3 +104,9 @@ Scribe AI is a ChatGPT extension for VS Code. Now you can have ChatGPT right in 
 - This wouldn't have been possible without OpenAI's API to access its AI services.
 - I want to thank the wonderful VS Code community and all the developers that maintain VS Code.
 - If you like this extension and found it useful, please consider donating me as I am only a new grad developer and any amount of donation will be of tremendous help and encourage me to keep going.
+
+<a target="_blank" href="https://icons8.com/icon/uZrQP6cYos2I/chatbot">Chatbot icon by Icons8</a>
+
+&nbsp;
+
+<p align="center">Copyright &copy; 2022-present Scribe AI Team</p>
