@@ -1,10 +1,11 @@
 {
 	"name": "scribeai",
-	"displayName": "ScribeAI",
-	"description": "ChatGPT extension for VSCode",
-	"version": "0.0.1",
+	"displayName": "ScribeAI - ChatGPT extension for VSCode",
+	"description": "🚀 Use ChatGPT right inside VSCode to enhance and automate your coding with AI-powered assistance",
+	"version": "1.0.1",
 	"publisher": "Andrew Zhang",
 	"private": true,
+	"icon": "resources/chatbot.png",
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
@@ -13,11 +14,54 @@
 	"engines": {
 		"vscode": "^1.65.0"
 	},
+	"sponsor": {
+		"url": "https://ko-fi.com/pixelperfectlabs"
+	},
 	"categories": [
-		"Other"
+		"Programming Languages",
+		"Snippets",
+		"Other",
+		"Machine Learning",
+		"Notebooks"
 	],
+	"keywords": [
+		"chatgpt",
+		"openai",
+		"gpt3",
+		"copilot",
+		"ai",
+		"codex",
+		"explain",
+		"fix bugs",
+		"optimize code",
+		"refactor",
+		"comment",
+    	"comments",
+    	"docstring",
+    	"autodocstring",
+    	"documentation",
+    	"completion",
+    	"completions",
+    	"javascript",
+    	"typescript",
+    	"python",
+    	"csharp",
+    	"c#",
+    	"c++",
+    	"php",
+    	"ai",
+    	"snippets",
+    	"snippet",
+		"webdev",
+		"chatbot",
+		"web development"
+	],
+	"galleryBanner": {
+		"color": "#041621",
+		"theme": "dark"
+	},
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
