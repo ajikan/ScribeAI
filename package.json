@@ -2,7 +2,7 @@
 	"name": "scribeai",
 	"displayName": "ScribeAI - ChatGPT extension for VSCode",
 	"description": "🚀 Use ChatGPT right inside VSCode to enhance and automate your coding with AI-powered assistance",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"publisher": "AndrewZhang",
 	"private": true,
 	"icon": "resources/chatbot.png",
