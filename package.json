@@ -2,7 +2,7 @@
 	"name": "scribeai",
 	"displayName": "ScribeAI - ChatGPT extension for VSCode",
 	"description": "🚀 Use ChatGPT right inside VSCode to enhance and automate your coding with AI-powered assistance",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"publisher": "AndrewZhang",
 	"private": true,
 	"icon": "resources/chatbot.png",
@@ -30,10 +30,10 @@
 		"copilot",
 		"ai",
 		"refactor",
-    	"docstring",
-    	"completion",
-    	"javascript",
-    	"typescript",
+		"docstring",
+		"completion",
+		"javascript",
+		"typescript",
 		"web development"
 	],
 	"galleryBanner": {
@@ -203,17 +203,20 @@
 			"properties": {
 				"scribeai.ApiKey": {
 					"type": "string",
-          			"default": "",
+					"default": "",
 					"scope": "application",
-          			"markdownDescription": "Your personal OpenAI API key. If you don't have one, generate a new one [here](https://beta.openai.com/account/api-keys).\n\nDon't forget to [restart your extension](command:workbench.action.reloadWindow) once you finished configuring so that your extension gets loaded with the new configurations."
+					"markdownDescription": "Your personal OpenAI API key. If you don't have one, generate a new one [here](https://beta.openai.com/account/api-keys).\n\nDon't forget to [restart your extension](command:workbench.action.reloadWindow) once you finished configuring so that your extension gets loaded with the new configurations."
 				},
 				"scribeai.models": {
 					"type": "string",
-    				"default": "code-davinci-002",
-    				"enum": ["code-davinci-002", "text-davinci-003"],
+					"default": "code-davinci-002",
+					"enum": [
+						"code-davinci-002",
+						"text-davinci-003"
+					],
 					"enumDescriptions": [
-					"The Codex models are descendants of GPT-3 models that can understand and generate code.",
-					"GPT-3 models can understand and generate natural language."
+						"The Codex models are descendants of GPT-3 models that can understand and generate code.",
+						"GPT-3 models can understand and generate natural language."
 					],
 					"markdownDescription": "Choose the OpenAI model you want to use for generating your AI responses.\n\nYou can find more details about each model and their pricing [here](https://beta.openai.com/docs/models)."
 				}
