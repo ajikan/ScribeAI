@@ -1,5 +1,5 @@
 <div align="center" id="madewithlua">
-    <img src="./resources/icons8-chatbot-94.png">
+    <img src="./resources/chatbot.png" width=200>
 </div>
 
 <h1 align="center">Scribe AI</h1>
