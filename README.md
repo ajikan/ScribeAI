@@ -36,7 +36,7 @@ Scribe AI is a ChatGPT extension for VS Code. Now you can have ChatGPT right in 
 </p>
 
 <h4 align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=AndrewZhang.scribeai">VSCode Marketplace</a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=AndrewZhang.scribeai">🔗 VSCode Marketplace</a>
 </h4>
 
 &nbsp;
@@ -95,7 +95,7 @@ Scribe AI is a ChatGPT extension for VS Code. Now you can have ChatGPT right in 
 &nbsp;
 
 # 🚀 Getting Started
-## Installation
+## 📦 Installation
 - To use this extension, install it from the VSCode marketplace or download and install `.vsix` file from Releases.
 
 - When you first use ScribeAI whether by `Ask AI` or `AI Edit`, it will ask you for your OpenAI API key. This is used by the extension to access the API and is only sent to OpenAI.
@@ -103,7 +103,7 @@ Scribe AI is a ChatGPT extension for VS Code. Now you can have ChatGPT right in 
   <img src="./apiKeyInput.png" />
 </p>
 
-## Settings
+## ⚙️ Settings
 - You can also change your API key in User Settings via `Code` -> `Preferences` -> `Settings` and under `Extensions` you will find `ScribeAI` settings. Or you can just search `ScribeAI` in search box.
 <p align="center">
   <img src="./userSettings.png" />
