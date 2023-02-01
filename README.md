@@ -140,9 +140,13 @@ To find your OpenAI API key:
 - This wouldn't have been possible without OpenAI's API to access its AI services.
 - I want to thank the wonderful VS Code community and all the developers that maintain VS Code.
 - If you like this extension and found it useful, please consider donating me as I am only a new grad developer and any amount of donation will be of tremendous help and encourage me to keep going.
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C0C0I5XTZ)
-
 - <a target="_blank" href="https://icons8.com/icon/uZrQP6cYos2I/chatbot">Chatbot icon by Icons8</a>
+
+&nbsp;
+
+<p align="center">
+<a href='https://ko-fi.com/C0C0I5XTZ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+</p>
 
 &nbsp;
 
