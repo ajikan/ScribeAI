@@ -1,8 +1,8 @@
 {
 	"name": "scribeai",
-	"displayName": "ScribeAI - ChatGPT like extension for VSCode",
-	"description": "🚀 Use ChatGPT like AI chatbot right inside VSCode to enhance and automate your coding with AI-powered assistance",
-	"version": "1.1.0",
+	"displayName": "ScribeAI - ChatGPT & GPT extension for VSCode",
+	"description": "🚀 Use ChatGPT & GPT right inside VSCode to enhance and automate your coding with AI-powered assistance",
+	"version": "1.1.1",
 	"publisher": "AndrewZhang",
 	"private": true,
 	"icon": "resources/chatbot.png",
@@ -212,11 +212,13 @@
 					"default": "code-davinci-002",
 					"enum": [
 						"code-davinci-002",
-						"text-davinci-003"
+						"text-davinci-003",
+						"ChatGPT"
 					],
 					"enumDescriptions": [
 						"The Codex models are descendants of GPT-3 models that can understand and generate code.",
-						"GPT-3 models can understand and generate natural language."
+						"GPT-3 models can understand and generate natural language.",
+						"Large language model trained by OpenAI that is optimized for dialogue."
 					],
 					"markdownDescription": "Choose the OpenAI model you want to use for generating your AI responses.\n\nYou can find more details about each model and their pricing [here](https://beta.openai.com/docs/models)."
 				}

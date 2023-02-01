@@ -250,7 +250,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	 */
 	function generatePromptV2(question: string, thread: vscode.CommentThread) {
 		const rolePlay =
-			"I want you to act as a highly intelligent AI chatbot that has deep understanding of any coding language and its API documentations. I will provide you with a code block and your role is to provide a comprehensive answer to any questions or requests that I will ask about the code block.";
+			"I want you to act as a highly intelligent AI chatbot that has deep understanding of any coding language and its API documentations. I will provide you with a code block and your role is to provide a comprehensive answer to any questions or requests that I will ask about the code block. Please answer in as much detail as possible and not be limited to brevity. It is very important that you provide verbose answers.";
 		//const codeBlock = "class Log:\n    def __init__(self, path):\n        dirname = os.path.dirname(path)\n        os.makedirs(dirname, exist_ok=True)\n        f = open(path, \"a+\")\n\n        # Check that the file is newline-terminated\n        size = os.path.getsize(path)\n        if size > 0:\n            f.seek(size - 1)\n            end = f.read(1)\n            if end != \"\\n\":\n                f.write(\"\\n\")\n        self.f = f\n        self.path = path\n\n    def log(self, event):\n        event[\"_event_id\"] = str(uuid.uuid4())\n        json.dump(event, self.f)\n        self.f.write(\"\\n\")\n\n    def state(self):\n        state = {\"complete\": set(), \"last\": None}\n        for line in open(self.path):\n            event = json.loads(line)\n            if event[\"type\"] == \"submit\" and event[\"success\"]:\n                state[\"complete\"].add(event[\"id\"])\n                state[\"last\"] = event\n        return state";
 		const codeBlock = getCommentThreadCode(thread);
 		
@@ -286,6 +286,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		const code = getCommentThreadCode(reply.thread);
 		const thread = reply.thread;
 		const prompt = generatePromptV1(question, thread);
+		const model = vscode.workspace.getConfiguration('scribeai').get('models') + "";
 		const humanComment = new NoteComment(question, vscode.CommentMode.Preview, { name: 'VS Code', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/user-male-circle.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
 		thread.comments = [...thread.comments, humanComment];
 		
@@ -302,7 +303,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 		
 		const response = await openai.createCompletion({
-			model: vscode.workspace.getConfiguration('scribeai').get('models') + "",
+			model: model === "ChatGPT" ? "text-chat-davinci-002-20230126" : model,
 			prompt: prompt,
 			//prompt: generatePromptV2(question, thread),
 			temperature: 0,
@@ -314,7 +315,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		});
 
 		const responseText = response.data.choices[0].text ? response.data.choices[0].text : 'An error occured. Please try again...';
-		const AIComment = new NoteComment(responseText.trim(), vscode.CommentMode.Preview, { name: 'Scribe AI', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/chatbot.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
+		const AIComment = new NoteComment(responseText.trim().replace("<|im_end|>", ""), vscode.CommentMode.Preview, { name: 'Scribe AI', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/chatbot.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
 		thread.comments = [...thread.comments, AIComment];
 	}
 

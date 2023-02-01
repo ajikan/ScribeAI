@@ -41,6 +41,15 @@ Scribe AI is a ChatGPT-like extension for VS Code. Now you can have an AI chatbo
 
 &nbsp;
 
+# 📢 v1.1.1 Update: ChatGPT Now Available
+You can now choose ChatGPT as the model you want to use by heading to `Code` -> `Preferences` -> `Settings`, find `ScribeAI` under `Extensions` and choose `ChatGPT` as your model.
+&nbsp;
+
+The GPT3 models are also now more performant thanks to experimentation with prompt engineering and tuning additional parameters. You can now expect to get longer and more detailed responses.
+
+
+&nbsp;
+
 # 🌟 Preview
 <p align="center">
   <img src="./previewDemo.gif" />
@@ -122,7 +131,8 @@ To find your OpenAI API key:
 &nbsp;
 
 > **Note**  
-> Temporarily, the extension is using Codex, a similar GPT model by OpenAI, instead of ChatGPT, since the official ChatGPT API is not out yet. We do this because using unofficial ChatGPT API is unsupported by OpenAI and it's not reliable. Our team has figured out a way to simulate ChatGPT using OpenAI's current available GPT models. You can choose between `code-davinci-002` and `text-davinci-003` in the User Settings. When the official ChatGPT API is out our team will immediately offer an option to choose the ChatGPT model.
+> Temporarily, the extension is using Codex, a similar GPT model by OpenAI, instead of ChatGPT, since the official ChatGPT API is not out yet. We do this because using unofficial ChatGPT API is unsupported by OpenAI and it's not reliable. Our team has figured out a way to simulate ChatGPT using OpenAI's current available GPT models. You can choose between `code-davinci-002` and `text-davinci-003` in the User Settings. When the official ChatGPT API is out our team will immediately offer an option to choose the ChatGPT model. 
+> UPDATE: ChatGPT API is now out and we've added it to our extension. You can now find it in the settings to start using it!
 
 &nbsp;
 
@@ -130,6 +140,7 @@ To find your OpenAI API key:
 - This wouldn't have been possible without OpenAI's API to access its AI services.
 - I want to thank the wonderful VS Code community and all the developers that maintain VS Code.
 - If you like this extension and found it useful, please consider donating me as I am only a new grad developer and any amount of donation will be of tremendous help and encourage me to keep going.
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C0C0I5XTZ)
 
 - <a target="_blank" href="https://icons8.com/icon/uZrQP6cYos2I/chatbot">Chatbot icon by Icons8</a>
 
