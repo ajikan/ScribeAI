@@ -129,7 +129,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			title: "Generating AI response...",
 			cancellable: true
 		}, async () => {
-			reply.text = "Write an elaborate, high quality docstring for the above function";
+			reply.text = "Write a docstring for the above code and use syntax of the coding language to format it.";
 			await askAI(reply);		
 		});
 	}));
@@ -221,14 +221,14 @@ export async function activate(context: vscode.ExtensionContext) {
 		
 		let conversation = "Human: Who are you?\n\nAI: I am a intelligent AI chatbot\n\n";
 		
-		for (let i = Math.max(0, thread.comments.length - 8); i < thread.comments.length; i++) {
-			if (thread.comments[i].label !== "NOTE") {
-				if (thread.comments[i].author.name === "VS Code") {
-					conversation += `Human: ${thread.comments[i].body}\n\n`;
-				} else if (thread.comments[i].author.name === "Scribe AI") {
-					conversation += `AI: ${thread.comments[i].body}\n\n`;
+		const filteredComments = thread.comments.filter(comment => comment.label !== "NOTE");
+
+		for (let i = Math.max(0, filteredComments.length - 8); i < filteredComments.length; i++) {
+				if (filteredComments[i].author.name === "VS Code") {
+					conversation += `Human: ${filteredComments[i].body}\n\n`;
+				} else if (filteredComments[i].author.name === "Scribe AI") {
+					conversation += `AI: ${filteredComments[i].body}\n\n`;
 				}
-			}
 		}
 		conversation += `Human: ${question}\n\nAI: `;
 
