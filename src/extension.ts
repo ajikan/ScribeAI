@@ -1,7 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { Configuration, OpenAIApi } from "openai";
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 
 let openai: OpenAIApi | undefined = undefined;
 
@@ -236,6 +236,42 @@ export async function activate(context: vscode.ExtensionContext) {
 	}
 
 	/**
+	 * Generates the prompt to pass to OpenAI ChatGPT API.
+	 * Prompt includes: 
+	 * - Role play text that gives context to AI
+	 * - Code block highlighted for the comment thread
+	 * - All of past conversation history + example conversation
+	 * - User's new question
+	 * @param question
+	 * @param thread 
+	 * @returns 
+	 */
+	async function generatePromptChatGPT(question: string, thread: vscode.CommentThread) {
+		const messages: ChatCompletionRequestMessage[] = [];
+		const rolePlay =
+			"I want you to act as a highly intelligent AI chatbot that has deep understanding of any coding language and its API documentations. I will provide you with a code block and your role is to provide a comprehensive answer to any questions or requests that I will ask about the code block. Please answer in as much detail as possible and not be limited to brevity. It is very important that you provide verbose answers.";
+		const codeBlock = await getCommentThreadCode(thread);
+		
+		messages.push({"role" : "system", "content" : rolePlay + "\nCode:\n```\n" + codeBlock + "\n```"});
+		messages.push({"role" : "user", "content" : "Who are you?"});
+		messages.push({"role" : "assistant", "content" : "I am a intelligent and helpful AI chatbot."});
+
+		const filteredComments = thread.comments.filter(comment => comment.label !== "NOTE");
+
+		for (let i = Math.max(0, filteredComments.length - 8); i < filteredComments.length; i++) {
+				if (filteredComments[i].author.name === "VS Code") {
+					messages.push({"role" : "user", "content" : `${filteredComments[i].body}`});
+				} else if (filteredComments[i].author.name === "Scribe AI") {
+					messages.push({"role" : "assistant", "content" : `${filteredComments[i].body}`});
+				}
+		}
+		messages.push({"role" : "user", "content" : `${question}`});
+
+
+		return messages; 
+	}
+
+	/**
 	 * Generates the prompt to pass to OpenAI.
 	 * Note: Not as performant as V1 but consumes less tokens per request.
 	 * Prompt includes: 
@@ -281,8 +317,14 @@ export async function activate(context: vscode.ExtensionContext) {
 	async function askAI(reply: vscode.CommentReply) {
 		const question = reply.text.trim();
 		const thread = reply.thread;
-		const prompt = await generatePromptV1(question, thread);
 		const model = vscode.workspace.getConfiguration('scribeai').get('models') + "";
+		let prompt = "";
+		let chatGPTPrompt: ChatCompletionRequestMessage[] = [];
+		if (model === "ChatGPT") {
+			chatGPTPrompt = await generatePromptChatGPT(question, thread);
+		} else {
+			prompt = await generatePromptV1(question, thread);
+		}
 		const humanComment = new NoteComment(question, vscode.CommentMode.Preview, { name: 'VS Code', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/user-male-circle.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
 		thread.comments = [...thread.comments, humanComment];
 		
@@ -297,21 +339,37 @@ export async function activate(context: vscode.ExtensionContext) {
 				apiKey: vscode.workspace.getConfiguration('scribeai').get('ApiKey'),
 			}));
 		}
-		const response = await openai.createCompletion({
-			model: model === "ChatGPT" ? "text-chat-davinci-002-20221122" : model,
-			prompt: prompt,
-			//prompt: generatePromptV2(question, thread),
-			temperature: 0,
-			max_tokens: 1000,
-			top_p: 1.0,
-			frequency_penalty: 1,
-			presence_penalty: 1,
-			stop: ["Human:"],  // V1: "Human:"
-		});
+		if (model === "ChatGPT") {
+			const response = await openai.createChatCompletion({
+				model: "gpt-3.5-turbo",
+				messages: chatGPTPrompt,
+				temperature: 0,
+				max_tokens: 1000,
+				top_p: 1.0,
+				frequency_penalty: 1,
+				presence_penalty: 1,
+			});
 
-		const responseText = response.data.choices[0].text ? response.data.choices[0].text : 'An error occured. Please try again...';
-		const AIComment = new NoteComment(responseText.trim().replace("<|im_end|>", ""), vscode.CommentMode.Preview, { name: 'Scribe AI', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/chatbot.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
-		thread.comments = [...thread.comments, AIComment];
+			const responseText = response.data.choices[0].message?.content ? response.data.choices[0].message?.content : 'An error occured. Please try again...';
+			const AIComment = new NoteComment(responseText.trim(), vscode.CommentMode.Preview, { name: 'Scribe AI', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/chatbot.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
+			thread.comments = [...thread.comments, AIComment];
+		} else {
+			const response = await openai.createCompletion({
+				model: model,
+				prompt: prompt,
+				//prompt: generatePromptV2(question, thread),
+				temperature: 0,
+				max_tokens: 1000,
+				top_p: 1.0,
+				frequency_penalty: 1,
+				presence_penalty: 1,
+				stop: ["Human:"],  // V1: "Human:"
+			});
+
+			const responseText = response.data.choices[0].text ? response.data.choices[0].text : 'An error occured. Please try again...';
+			const AIComment = new NoteComment(responseText.trim().replace("<|im_end|>", ""), vscode.CommentMode.Preview, { name: 'Scribe AI', iconPath: vscode.Uri.parse("https://img.icons8.com/fluency/96/null/chatbot.png") }, thread, thread.comments.length ? 'canDelete' : undefined);
+			thread.comments = [...thread.comments, AIComment];
+		}
 	}
 
 	/**
