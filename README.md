@@ -41,6 +41,10 @@ Scribe AI is a ChatGPT-like extension for VS Code. Now you can have an AI chatbo
 
 &nbsp;
 
+# 📢 v1.2.0 Update
+- `code-davinci-002` no longer supported. OpenAI recently announced the shutdown of Codex models by March 23.
+- Markdown support! Answers provided by AI are now formatted in markdown to enable better readability.
+
 # 📢 v1.1.5 Update
 - Official ChatGPT is finally available! OpenAI recently officially announced the release of their ChatGPT API. 
 - You can now select the ChatGPT model by going to User Settings via `Code` -> `Preferences` -> `Settings` and under `Extensions` you will find `ScribeAI` settings. Or you can just search `ScribeAI` in search box. And you will find a option to choose your model. Go ahead and choose `ChatGPT` and restart your extension by clicking on `restart your extension` in the API key settings. Now you are using ChatGPT!
