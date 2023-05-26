@@ -320,7 +320,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		const model = vscode.workspace.getConfiguration('scribeai').get('models') + "";
 		let prompt = "";
 		let chatGPTPrompt: ChatCompletionRequestMessage[] = [];
-		if (model === "ChatGPT") {
+		if (model === "ChatGPT" || model === "gpt-4") {
 			chatGPTPrompt = await generatePromptChatGPT(question, thread);
 		} else {
 			prompt = await generatePromptV1(question, thread);
@@ -339,9 +339,9 @@ export async function activate(context: vscode.ExtensionContext) {
 				apiKey: vscode.workspace.getConfiguration('scribeai').get('ApiKey'),
 			}));
 		}
-		if (model === "ChatGPT") {
+		if (model === "ChatGPT" || model === "gpt-4") {
 			const response = await openai.createChatCompletion({
-				model: "gpt-3.5-turbo",
+				model: (model === "ChatGPT" ? "gpt-3.5-turbo" : "gpt-4"),
 				messages: chatGPTPrompt,
 				temperature: 0,
 				max_tokens: 1000,

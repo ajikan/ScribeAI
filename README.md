@@ -41,6 +41,9 @@ Scribe AI is a ChatGPT-like extension for VS Code. Now you can have an AI chatbo
 
 &nbsp;
 
+# 📢 v1.2.1 Update
+- `gpt-4` model is now available to choose for those people that have access to it.
+
 # 📢 v1.2.0 Update
 - `code-davinci-002` no longer supported. OpenAI recently announced the shutdown of Codex models by March 23.
 - Markdown support! Answers provided by AI are now formatted in markdown to enable better readability.
